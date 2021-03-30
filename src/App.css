@@ -1,0 +1,121 @@
+* { 
+    margin: 0px; 
+    padding: 0px; 
+}
+html, body {
+    min-width: 435px;
+    min-height: 1000px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+div.background {
+    position: absolute;
+    top: 0px; left: 0px;
+    min-width: 435px;
+    min-height: 1000px;
+    height: 100%; width: 100%;
+    background: #408dce url('https://hoidrop.s3-us-west-2.amazonaws.com/cp_social_app_background.jpg') no-repeat center center; 
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
+}
+
+/*	The Device */
+
+div.iphone {
+    height: 810px; width: 435px; 
+    position: absolute;
+    margin: auto;
+    top: 0px; bottom: 80px; left: 0px; right: 0px;
+    background: url('https://hoidrop.s3-us-west-2.amazonaws.com/cp_social_app_iphone.png') no-repeat center center; 
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
+}
+
+div.screen {
+    height: 568px; width: 320px;
+    position: absolute;
+    top: 119px; left: 59px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+
+
+.c-player {
+    width: 290px;
+    padding: 15px;
+    background: #384142b8;
+    color: #fff;
+    height: 100%;
+}
+
+
+.App {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(232,156,172);
+	background: linear-gradient(
+		326deg
+		, rgba(232,156,172,1) 35%, rgba(88,221,252,1) 89%);
+}
+
+
+.player-info {
+	display: flex;
+	flex-direction: column;
+	box-shadow: none!important;
+	background: none!important;
+	border-radius: 0;
+}
+
+
+.bottom-nav {
+    display: flex;
+    background: red;
+}
+
+.wrapper {
+	height: 512px;
+}
+/* 
+root: {
+	display: 'flex',
+	flexDirection: 'column',
+	boxShadow: 'none',
+	background: 'none',
+	borderRadius: '0',
+},
+details: {
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'flex-start',
+},
+content: {
+	padding: '15px 0',
+},
+img: {
+	width: '100%'
+},
+controls: {
+	display: 'flex',
+	alignItems: 'center',
+	paddingLeft: theme.spacing(1),
+	paddingBottom: theme.spacing(1),
+},
+playIcon: {
+	padding: '15px 0',
+	color: '#fff',
+}, */
