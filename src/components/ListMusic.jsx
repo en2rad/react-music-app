@@ -12,36 +12,38 @@ import All_song from './songs'
 import ItemListMusic from './ItemListMusic'
 
 
-let title = All_song[1].title
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    height: 471,
-    maxWidth: 320,
-    padding: 15,
-    background: '#384142b8',
-  },
+	root: {
+		overflowY: 'scroll',
+		maxHeight: '512px'
+	},
 
 }));
 
-function renderRow({index, style}) {
-	const item = All_song[index]
-
-	return (
-		<ItemListMusic index={index} style={style} item={item}/>
-	);
-}
-
-function ListMusic() {
+function ListMusic({playList}) {
     const classes = useStyles();
-
+    const {  favoriteSong, setFavoriteSong, handleFovorite, PickSong } = useContext(Context);
+	
     return (
         <div className={classes.root}>
-            <FixedSizeList height={400} width={320} itemSize={46} itemCount={All_song.length}>
-				        {renderRow}
-            </FixedSizeList>
+            { 
+				playList.map((fSong, index) => {
+					return (
+						<ListItem onClick={()=> PickSong(index)} className={classes.list}  button key={index}>
+							<Avatar variant="square" className="" src={fSong.img_src} alt="img"/>
+							
+							<ListItemText primary={fSong.title} secondary={fSong.artist} />
+				
+							<IconButton arial-label="reqind">
+								<MoreVertIcon fontSize="inherit"/>
+							</IconButton>
+						</ListItem>
+					)
+				})
+            }
+
         </div>
     );
 }

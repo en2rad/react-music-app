@@ -29,7 +29,7 @@ import ListMusic from './components/ListMusic'
 import MyPlayList from './components/MyPlayList'
 
 function App() {
-	const { page } = useContext(Context);
+	const { page, songs } = useContext(Context);
 
 	return (
 		<div class="background">
@@ -44,10 +44,10 @@ function App() {
 									<Home />
 								</Route>
 								<Route path="/about">
-									<ListMusic/>
+									<ListMusic playList={songs} />
 								</Route>
 								<Route path="/dashboard">
-									<MyPlayList/>
+									<MyPlayList  />
 								</Route>
 							</Switch>	
 

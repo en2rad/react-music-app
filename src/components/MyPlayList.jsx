@@ -24,17 +24,25 @@ const useStyles = makeStyles((theme) => ({
 
 function MyPlayList() {
     const classes = useStyles();
-    const {  favoriteSong, setFavoriteSong, handleFovorite, PickSong } = useContext(Context);
+    const {  favoriteSong, setFavoriteSong, handleFovorite, PickSong, playList, setSongs,PickPlayList } = useContext(Context);
 	
+	const books = [];
+
+	for(let key in playList) {
+		const book = playList[key];
+		books.push(book);
+	}
+
     return (
         <div className={classes.root}>
             { 
-				favoriteSong.map((fSong, index) => {
+				books.map((item, index) => {
 					return (
-						<ListItem onClick={()=> PickSong(index)} className={classes.list}  button key={index}>
-							<Avatar variant="square" className="" src={fSong.img_src} alt="img"/>
-							
-							<ListItemText primary={fSong.title} secondary={fSong.artist} />
+						<ListItem onClick={() => PickPlayList(item.tracks)} className={classes.list}  button key={index}>
+							<Avatar variant="square" className="" src={item.img_src} alt="img"/>
+						
+
+							<ListItemText primary={item.title} secondary={item.tracks.length} />
 				
 							<IconButton arial-label="reqind">
 								<MoreVertIcon fontSize="inherit"/>

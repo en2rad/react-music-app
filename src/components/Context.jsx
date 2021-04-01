@@ -12,7 +12,7 @@ const ContextApp = ({ children }) => {
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const [nextSongIndex, setNextSongIndex] = useState(0);
     const [page, setPage] = useState(true)
-    const [songs, setSongs] = useState(All_song); 
+    // const [songs, setSongs] = useState(All_song); 
     const [playerState, setPlayerState] = useState({
         playing: false,
         muted: false,
@@ -32,15 +32,124 @@ const ContextApp = ({ children }) => {
             favorite: true,
         },
     ])
+    
+    const [playListIndex, setPlayListIndex] = useState(0);
+    const [songs, setSongs] = useState(All_song); 
+
+    const [playList, setPlayList]  = useState({
+        favoritePlayList: {
+            id: "favoritePlayList",
+            title: "Мой любимые",
+            img_src: "./images/mujuice.jpg",
+            src: "./music/Mujuice - Энтропия.mp3",
+            favorite: true,
+            tracks: [	{
+                title: "VO52-V1M",
+                artist: "20syl",
+                img_src: "./images/20syl.jpg",
+                src: "./music/20syl - VO52-V1M.mp3",
+                favorite: false,
+            },
+            {
+                title: "A New Error",
+                artist: "Moderat",
+                img_src: "./images/moderat.jpg",
+                src: "./music/Moderat - A New Error.mp3",
+                favorite: false,
+            },]
+        },
+        allSongs: {
+            id: "2",
+            title: "Вся",
+            img_src: "./images/mujuice.jpg",
+            src: "./music/Mujuice - Энтропия.mp3",
+            favorite: true, 
+            tracks: [		
+                {
+                    title: "VO52-V1M",
+                    artist: "20syl",
+                    img_src: "./images/20syl.jpg",
+                    src: "./music/20syl - VO52-V1M.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "A New Error",
+                    artist: "Moderat",
+                    img_src: "./images/moderat.jpg",
+                    src: "./music/Moderat - A New Error.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "Энтропия",
+                    artist: "Mujuice",
+                    img_src: "./images/mujuice.jpg",
+                    src: "./music/Mujuice - Энтропия.mp3",
+                    favorite: true,
+                },
+                {
+                    title: "Faint",
+                    artist: "Quok",
+                    img_src: "./images/quok.jpg",
+                    src: "./music/Quok - Faint.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "Stressed Out",
+                    artist: "Twenty One Pilots",
+                    img_src: "./images/tw.gif",
+                    src: "./music/Twenty One Pilots - Stressed Out.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "VO52-V1M",
+                    artist: "20syl",
+                    img_src: "./images/20syl.jpg",
+                    src: "./music/20syl - VO52-V1M.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "A New Error",
+                    artist: "Moderat",
+                    img_src: "./images/moderat.jpg",
+                    src: "./music/Moderat - A New Error.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "Энтропия",
+                    artist: "Mujuice",
+                    img_src: "./images/mujuice.jpg",
+                    src: "./music/Mujuice - Энтропия.mp3",
+                    favorite: true,
+                },
+                {
+                    title: "Faint",
+                    artist: "Quok",
+                    img_src: "./images/quok.jpg",
+                    src: "./music/Quok - Faint.mp3",
+                    favorite: false,
+                },
+                {
+                    title: "Stressed Out",
+                    artist: "Twenty One Pilots",
+                    img_src: "./images/tw.gif",
+                    src: "./music/Twenty One Pilots - Stressed Out.mp3",
+                    favorite: false,
+                },
+            ]
+        },
+    })
+
+    const PickPlayList = (value) => {
+        setSongs(value);
+    } 
 
 
     const PickSong = (index) => {
-        
         if(currentSongIndex === index) {
             handlePlayPause()
         } else {
             setCurrentSongIndex(index) 
-            handlePlayPause()
+            setPlayerState( { ...playerState, playing: true});
         }
     } 
 
@@ -54,22 +163,50 @@ const ContextApp = ({ children }) => {
         });
     }, [currentSongIndex]);
 
-
     const handleFovorite = () => {
-        console.log(songs[currentSongIndex])
         if(songs[currentSongIndex].favorite) {
-            setFavoriteSong(favoriteSong.filter(song => song !== songs[currentSongIndex]))
+            setPlayList({
+                ...playList, 
+                    favoritePlayList: {
+                        ...playList.favoritePlayList, 
+                        tracks: [ playList.favoritePlayList.tracks.filter(track => track !== songs[currentSongIndex]) ]
+                    } 
+                })
         }
         if(!songs[currentSongIndex].favorite) {
-            setFavoriteSong([songs[currentSongIndex], ...favoriteSong])
+            setPlayList({
+                ...playList, 
+                    favoritePlayList: {
+                        ...playList.favoritePlayList, 
+                        tracks: [ songs[currentSongIndex], ...playList.favoritePlayList.tracks ]
+                    } 
+                })
         }
         
         const prevState = [...songs]
+      
+
         prevState.forEach(song => {
             return song === songs[currentSongIndex] ? song.favorite = !song.favorite : null
         })
         setSongs([...prevState])    
     }; 
+
+    //true
+    // const handleFovorite = () => {
+    //     if(songs[currentSongIndex].favorite) {
+    //         setFavoriteSong(favoriteSong.filter(song => song !== songs[currentSongIndex]))
+    //     }
+    //     if(!songs[currentSongIndex].favorite) {
+    //         setFavoriteSong([songs[currentSongIndex], ...favoriteSong])
+    //     }
+        
+    //     const prevState = [...songs]
+    //     prevState.forEach(song => {
+    //         return song === songs[currentSongIndex] ? song.favorite = !song.favorite : null
+    //     })
+    //     setSongs([...prevState])    
+    // }; 
 
 
 
@@ -77,24 +214,10 @@ const ContextApp = ({ children }) => {
     const handlePlayPause = () => {
         setPlayerState( { ...playerState, playing: !playerState.playing });
     };
-   
-    // const handlePlayPause = useCallback(
-    //     () => {
-    //         setPlayerState( { ...playerState, playing: !playerState.playing })
-    //     },
-    //     [playerState.playing],
-    // );
     
     const handleMuted = () => {
         setPlayerState( { ...playerState, muted: !playerState.muted});
     };
-
-    // const handleMuted = useCallback( 
-    //     () => {
-    //         setPlayerState( { ...playerState, muted: !playerState.muted })
-    //     },
-    //     [playerState.muted, playerState.volume],
-    // );
 
     const handleLoop = () => {
         setPlayerState( { ...playerState, loop: !playerState.loop });
@@ -152,6 +275,7 @@ const ContextApp = ({ children }) => {
 
     return (
         <Provider value={{
+            PickPlayList,
             songs,
             currentSongIndex,
 
@@ -183,6 +307,7 @@ const ContextApp = ({ children }) => {
 
             favoriteSong,
             setPlayerState,
+            playList,
         }}>
             {children}
         </Provider>
