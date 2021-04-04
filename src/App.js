@@ -1,35 +1,32 @@
 import './App.css';
-import React, { useState, useContext } from 'react'
-
-import { Context} from './components/Context'
+import React, { useEffect } from 'react'
 
 import {
-	TransitionGroup,
-	CSSTransition
-  } from "react-transition-group";
-  import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
-	Redirect,
-	useLocation,
-	useParams
-  } from "react-router-dom";
-
-// material ui
-import { Toolbar, AppBar, Typography, BottomNavigation, BottomNavigationAction, IconButton } from '@material-ui/core';
-
+} from "react-router-dom";
 
 // compnent
-import Player from './components/Player'
-import MyAppBar from './components/AppBar'
-import BottomNav from './components/BottomNav'
+import PlayLists from './components/PlayLists'
 import ListMusic from './components/ListMusic'
-import MyPlayList from './components/MyPlayList'
+import BottomNav from './components/BottomNav'
+import Player from './components/Player/Player'
 
-function App() {
-	const { page, songs } = useContext(Context);
+import { handlePickPlayList } from './redux/action'
+
+import { connect } from 'react-redux';
+
+
+function App({playerState, playList, handlePickPlayList}) {
+	useEffect(() => {
+        handlePickPlayList(playList.allSongs.tracks)
+    },[])
+
+    const {   
+        currentPlayList,
+    } = playerState;
+
 
 	return (
 		<div class="background">
@@ -37,21 +34,16 @@ function App() {
 				<div class="screen">
 					<Router>
 						<div className="wrapper">
-							{/* <MyAppBar/> */}
-							<Player />
+							<Player /> 
 							<Switch>
-								<Route exact path="/">
-									<Home />
+								<Route exact path="/"></Route>
+								<Route path="/list-music">
+									<ListMusic playerState={playerState} playList={currentPlayList} />
 								</Route>
-								<Route path="/about">
-									<ListMusic playList={songs} />
+								<Route path="/play-list">
+									<PlayLists />
 								</Route>
-								<Route path="/dashboard">
-									<MyPlayList  />
-								</Route>
-							</Switch>	
-
-							
+							</Switch>					
 						</div>
 						<BottomNav/>
 					</Router>
@@ -61,24 +53,18 @@ function App() {
   	);
 }
 
+const mapStateToProps = (store) => {
+    const { playerState } = store;
+	const { playList } = store;
+    return {
+        playerState: playerState,
+		playList: playList,
+    };
+};
 
-function Home() {
-	return (
-	  <div>
-		
-			
-	  </div>
-	);
-  }
-  
-
-  
-  function Dashboard() {
-	return (
-	  <div>
-		<h2>Dashboard</h2>
-	  </div>
-	);
-  }
-
-export default App;
+export default connect(
+    mapStateToProps,
+    { 
+		handlePickPlayList,
+    }
+)(App);

@@ -11,9 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.hidden {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-}

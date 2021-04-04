@@ -1,51 +1,53 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types';
-// import { makeStyles } from '@material-ui/core/styles';
-// import ListItem from '@material-ui/core/ListItem';
+import React from 'react'
 import { ListItemText, ListItem, makeStyles, IconButton, Avatar } from '@material-ui/core/';
-import { FixedSizeList } from 'react-window';
-import { Context } from "./Context";
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import All_song from './songs'
-
-import ItemListMusic from './ItemListMusic'
-
+import { connect } from 'react-redux'
+import { handleSkipTrack, handlePlayPause } from '../redux/action'
 
 
+function ListMusic({playList, handleSkipTrack, playerState, handlePlayPause}) {
+	const {   
+        currentSongIndex,
+    } = playerState;
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		overflowY: 'scroll',
-		maxHeight: '512px'
-	},
+	const PickSong = (index) => {
+        if(currentSongIndex === index) {
+            handlePlayPause()
+        } else {
+            handleSkipTrack(index)
+			handlePlayPause(true)
+        }
+    } 
 
-}));
-
-function ListMusic({playList}) {
-    const classes = useStyles();
-    const {  favoriteSong, setFavoriteSong, handleFovorite, PickSong } = useContext(Context);
-	
     return (
-        <div className={classes.root}>
-            { 
-				playList.map((fSong, index) => {
+		<div className="c-list-music">
+			<div className="c-list-music__header">
+				<span className="c-list-music__disc">
+					Cейчас играет
+				</span>
+				<p className="c-list-music__title">Плейлист "Мне нравится"</p>
+			</div>
+
+			{ 
+				playList.map((item, index) => {
 					return (
-						<ListItem onClick={()=> PickSong(index)} className={classes.list}  button key={index}>
-							<Avatar variant="square" className="" src={fSong.img_src} alt="img"/>
+						<ListItem onClick={()=> PickSong(index)} className="c-list-music__item"  button key={index}>
+							<Avatar className="c-list-music__img" variant="square" src={item.img_src} alt="img"/>
 							
-							<ListItemText primary={fSong.title} secondary={fSong.artist} />
+							<ListItemText className="c-list-music__text" primary={item.title} secondary={item.artist} />
 				
-							<IconButton arial-label="reqind">
-								<MoreVertIcon fontSize="inherit"/>
+							<IconButton className="c-list-music__btn btn-more" arial-label="reqind">
+								<MoreVertIcon className="c-list-music__icon icon" fontSize="inherit"/>
 							</IconButton>
 						</ListItem>
 					)
 				})
             }
-
         </div>
     );
 }
 
-export default ListMusic;
+export default connect(
+	null, { handleSkipTrack, handlePlayPause }
+)(ListMusic);
