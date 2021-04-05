@@ -9,8 +9,19 @@ import {
     VOLUME_CHANGE_TRACK, 
     MUTED_TRACK, 
     SEEK_CHANGE_TRACK, 
-    SEEK_MOUSE_DOWN_TRACK 
+    SEEK_MOUSE_DOWN_TRACK,
+    LIKE_CURR_TRACK
 } from "./actionTypes"
+
+
+
+
+export const handleLikeCurrentTrack = ( newValue ) => ({
+    type: LIKE_CURR_TRACK,
+    payload: { 
+        newValue
+    }
+});
 
 export const handleLikeTrack = ( newValue ) => ({
     type: LIKE_TRACK,

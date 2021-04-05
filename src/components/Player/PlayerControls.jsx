@@ -16,7 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 import { connect } from 'react-redux';
-import { handleLikeTrack, handleSeekMouseDown, handlePlayPause, handleVolumeChange, handleMuted, handleLoop } from "../../redux/action";
+import { handleLikeCurrentTrack, handleLikeTrack, handleSeekMouseDown, handlePlayPause, handleVolumeChange, handleMuted, handleLoop } from "../../redux/action";
 
 const MySlider = withStyles({
     root: {
@@ -31,32 +31,31 @@ const MySlider = withStyles({
     },
     active: {},
     valueLabel: {
-      left: 'calc(-50% + 12px)',
-      top: -22,
-      '& *': {
-        background: 'transparent',
-        color: '#000',
-      },
+        left: 'calc(-50% + 12px)',
+        top: -22,
+        '& *': {
+            background: 'transparent',
+            color: '#000',
+        },
     },
     track: {
-      height: 2,
+        height: 2,
     },
     rail: {
-      height: 2,
-      opacity: 0.3,
-     
+        height: 2,
+        opacity: 0.3,
     },
     mark: {
-      backgroundColor: 'red',
-      height: 8,
-      width: 1,
-      marginTop: -3,
+        backgroundColor: 'red',
+        height: 8,
+        width: 1,
+        marginTop: -3,
     },
     markActive: {
-      opacity: 1,
-      backgroundColor: 'currentColor',
+        opacity: 1,
+        backgroundColor: 'currentColor',
     },
-  })(Slider);
+})(Slider);
 
 function ValueLabelComponent(props) {
   const { children, open, value } = props;
@@ -99,7 +98,7 @@ const useStyles = makeStyles({
 
 
 
-function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeTrack, onSkipTrack, onSeekMouseUp, handleSeekMouseDown, elapsedTime, totalDuration, handlePlayPause, playerState, handleVolumeChange, handleMuted, handleLoop} ) 
+function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIndex, onSeek, handleLikeTrack, onSkipTrack, onSeekMouseUp, handleSeekMouseDown, elapsedTime, totalDuration, handlePlayPause, playerState, handleVolumeChange, handleMuted, handleLoop} ) 
     {
     
     // const { songs, currentSongIndex } = useContext(Context);
@@ -107,6 +106,10 @@ function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeT
     
     const classes = useStyles();
 
+    function Like(newValue) {
+        handleLikeCurrentTrack(newValue)
+        handleLikeTrack(newValue)
+    }
 
     return (
         <>  
@@ -165,7 +168,9 @@ function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeT
                 <IconButton onClick={() => onSkipTrack()}  className={classes.iconStyle, classes.iconStyleBig} arial-label="reqind">
                     <SkipNextIcon fontSize="inherit"/>
                 </IconButton>
-                <IconButton onClick={() => handleLikeTrack(currentPlayList[currentSongIndex])} className={classes.iconStyle} arial-label="reqind">
+
+                {/* onClick={() => handleLikeTrack(currentPlayList[currentSongIndex], currentSongIndex)} */}
+                <IconButton onClick={() => Like(currentPlayList[currentSongIndex])} className={classes.iconStyle} arial-label="reqind">
                     { 
                         currentPlayList[currentSongIndex].favorite ?   
                             <FavoriteIcon fontSize="inherit"/>:
@@ -213,6 +218,8 @@ export default connect(
         handleLoop,
         handleSeekMouseDown,
         handleLikeTrack,
+
+        handleLikeCurrentTrack,
     }
 )(PlayerControls);
 

@@ -20,37 +20,56 @@ const initState  = {
     },
 };
 
-
 const playList = (state = initState, action) => {
     const { type, payload } = action;
 
     switch(type) {
         case LIKE_TRACK:  {
+            
             const { newValue } = payload;
             const value = { ...newValue, favorite: !newValue.favorite}
-            if( state.favoritePlayList.tracks.includes(newValue) ) {
+            if( newValue.favorite ) {
                 return {
                     ...state,
                     favoritePlayList: {
                         ...state.favoritePlayList,
-                        tracks: state.favoritePlayList.tracks.filter(item => item != newValue)
+                        tracks: state.favoritePlayList.tracks.filter(item => item !== newValue)
                     },
-                    // allSongs: {
-                    //     ...state.allSongs,
-                    //     tracks: [...state.allSongs.tracks, newValue:]
-                    // }
-            }   
-            } else {
+                    allSongs: {
+                        ...state.allSongs,
+                        tracks: [ ...state.allSongs.tracks.map(item => {
+                            if(item === newValue) {
+                                return {
+                                    ...item,
+                                    favorite: !item.favorite,
+                                }
+                            }
+                            return item;
+                        })]
+                    }
+                }   
+            } 
+            if( !newValue.favorite ) {
                 return {
                     ...state,
                     favoritePlayList: {
                         ...state.favoritePlayList,
                         tracks: [...state.favoritePlayList.tracks, value]
+                    },
+                    allSongs: {
+                        ...state.allSongs,
+                        tracks: [ ...state.allSongs.tracks.map(item => {
+                            if(item === newValue) {
+                                return {
+                                    ...item,
+                                    favorite: !item.favorite,
+                                }
+                            }
+                            return item;
+                        })]
                     }
                 }
-            }
-
-           
+            }         
         }
 
         default: {
