@@ -24,16 +24,16 @@ const playList = (state = initState, action) => {
     const { type, payload } = action;
 
     switch(type) {
-        case LIKE_TRACK:  {
-            
+        case LIKE_TRACK:  {  
             const { newValue } = payload;
             const value = { ...newValue, favorite: !newValue.favorite}
+
             if( newValue.favorite ) {
                 return {
                     ...state,
                     favoritePlayList: {
                         ...state.favoritePlayList,
-                        tracks: state.favoritePlayList.tracks.filter(item => item !== newValue)
+                        tracks: state.favoritePlayList.tracks.filter(item => item.id !== newValue.id)
                     },
                     allSongs: {
                         ...state.allSongs,

@@ -107,8 +107,9 @@ function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIn
     const classes = useStyles();
 
     function Like(newValue) {
-        handleLikeCurrentTrack(newValue)
         handleLikeTrack(newValue)
+        handleLikeCurrentTrack(newValue)
+        
     }
 
     return (
