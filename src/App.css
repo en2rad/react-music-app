@@ -281,3 +281,9 @@ div.screen {
 .volume-wrap {
     display: flex;
 }
+
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	position: absolute;
+}

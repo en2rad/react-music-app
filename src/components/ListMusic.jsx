@@ -1,14 +1,27 @@
-import React, { useContext } from 'react'
-import { ListItemText, ListItem, IconButton, Avatar } from '@material-ui/core/';
-import { Context } from "./Context";
+import React from 'react'
+import { ListItemText, ListItem, makeStyles, IconButton, Avatar } from '@material-ui/core/';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux'
+import { handleSkipTrack, handlePlayPause } from '../redux/action'
 
-function ListMusic({playList}) {
-    const { PickSong } = useContext(Context);
-	
+
+function ListMusic({playList, handleSkipTrack, playerState, handlePlayPause}) {
+	const {   
+        currentSongIndex,
+    } = playerState;
+
+	const PickSong = (index) => {
+        if(currentSongIndex === index) {
+            handlePlayPause()
+        } else {
+            handleSkipTrack(index)
+			handlePlayPause(true)
+        }
+    } 
+
     return (
-        <div className="c-list-music">
+		<div className="c-list-music">
 			<div className="c-list-music__header">
 				<span className="c-list-music__disc">
 					Cейчас играет
@@ -16,7 +29,7 @@ function ListMusic({playList}) {
 				<p className="c-list-music__title">Плейлист "Мне нравится"</p>
 			</div>
 
-            { 
+			{ 
 				playList.map((item, index) => {
 					return (
 						<ListItem onClick={()=> PickSong(index)} className="c-list-music__item"  button key={index}>
@@ -31,9 +44,10 @@ function ListMusic({playList}) {
 					)
 				})
             }
-
         </div>
     );
 }
 
-export default ListMusic;
+export default connect(
+	null, { handleSkipTrack, handlePlayPause }
+)(ListMusic);
