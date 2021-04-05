@@ -1,6 +1,6 @@
 import './App.css';
-import React, { useEffect } from 'react'
-
+import React, {useContext } from 'react'
+import { Context} from './components/Context'
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -8,25 +8,13 @@ import {
 } from "react-router-dom";
 
 // compnent
-import PlayLists from './components/PlayLists'
-import ListMusic from './components/ListMusic'
+import Player from './components/Player'
 import BottomNav from './components/BottomNav'
-import Player from './components/Player/Player'
+import ListMusic from './components/ListMusic'
+import MyPlayList from './components/MyPlayList'
 
-import { handlePickPlayList } from './redux/action'
-
-import { connect } from 'react-redux';
-
-
-function App({playerState, playList, handlePickPlayList}) {
-	useEffect(() => {
-        handlePickPlayList(playList.allSongs.tracks)
-    },[])
-
-    const {   
-        currentPlayList,
-    } = playerState;
-
+function App() {
+	const { songs } = useContext(Context);
 
 	return (
 		<div class="background">
@@ -34,16 +22,16 @@ function App({playerState, playList, handlePickPlayList}) {
 				<div class="screen">
 					<Router>
 						<div className="wrapper">
-							<Player /> 
+							<Player />
 							<Switch>
 								<Route exact path="/"></Route>
 								<Route path="/list-music">
-									<ListMusic playerState={playerState} playList={currentPlayList} />
+									<ListMusic playList={songs} />
 								</Route>
 								<Route path="/play-list">
-									<PlayLists />
+									<MyPlayList  />
 								</Route>
-							</Switch>					
+							</Switch>								
 						</div>
 						<BottomNav/>
 					</Router>
@@ -53,18 +41,4 @@ function App({playerState, playList, handlePickPlayList}) {
   	);
 }
 
-const mapStateToProps = (store) => {
-    const { playerState } = store;
-	const { playList } = store;
-    return {
-        playerState: playerState,
-		playList: playList,
-    };
-};
-
-export default connect(
-    mapStateToProps,
-    { 
-		handlePickPlayList,
-    }
-)(App);
+export default App;

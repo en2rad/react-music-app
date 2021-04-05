@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 // material ui
 import {  BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 
-import { Context } from "./context/Context";
+import { Context } from "./Context";
 
 import HomeIcon from '@material-ui/icons/Home';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';

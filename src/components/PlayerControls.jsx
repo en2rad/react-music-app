@@ -1,7 +1,7 @@
 import React, { useContext} from 'react'
 
 // material ui
-import { IconButton, makeStyles, Slider, withStyles, Tooltip, Button, Typography } from '@material-ui/core';
+import { IconButton, makeStyles, Slider, withStyles, Tooltip, Typography } from '@material-ui/core';
 
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
@@ -177,28 +177,29 @@ function PlayerControls( {
                 <IconButton onClick={() => onFovorite()} className={classes.iconStyle} arial-label="reqind">
                     { 
                         songs[currentSongIndex].favorite ?  
-                        <FavoriteIcon fontSize="inherit"/>:
-                        <FavoriteBorderIcon fontSize="inherit"/>             
+                        <FavoriteIcon fontSize="inherit"/>: 
+                        <FavoriteBorderIcon fontSize="inherit"/>            
                     }
                 </IconButton>
                 
             </div>    
         
+            <div className="volume-wrap">
+                <IconButton onClick={()=> onMuted()} className={classes.iconStyle} arial-label="reqind">
+                    { 
+                        playerState.muted ?
+                            <VolumeOffIcon fontSize="inherit"/> :
+                            <VolumeUp fontSize="inherit"/>
+                    }
+                </IconButton>
 
-            <IconButton onClick={()=> onMuted()} className={classes.iconStyle} arial-label="reqind">
-                { 
-                    playerState.muted ?
-                        <VolumeOffIcon fontSize="inherit"/> :
-                        <VolumeUp fontSize="inherit"/>
-                }
-            </IconButton>
-
-            <Slider 
-                min={0}
-                max={100}
-                defaultValue={100}
-                onChange={onVolumeChange}
-            />
+                <Slider 
+                    min={0}
+                    max={100}
+                    defaultValue={100}
+                    onChange={onVolumeChange}
+                />
+           </div>
         </>		
     );
 }
