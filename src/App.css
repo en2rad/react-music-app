@@ -281,3 +281,55 @@ div.screen {
 .volume-wrap {
     display: flex;
 }
+
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	position: absolute;
+}
+
+
+
+
+
+
+
+
+
+.bot-menu__wrap.open {
+    z-index: 1;
+    overflow: visible;
+    opacity: 1;
+}
+
+
+.bot-menu__wrap {
+    position: absolute;
+    width: 100%;
+    bottom: 45px;
+
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.bot-menu {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    max-height: 100%;
+    padding: 0!important;
+
+    color: rgba(0, 0, 0, 0.87);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #fff;
+
+    transform: none;
+    transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.bot-menu ul {
+    padding: 0;
+}
