@@ -203,7 +203,7 @@ function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIn
             </div>    
         
 
-            <div className="volume-wrap">       
+            {/* <div className="volume-wrap">       
                 <IconButton onClick={()=>  handleMuted()} className={classes.iconStyle} arial-label="reqind">
                     { 
                         playerState.muted ?
@@ -239,7 +239,7 @@ function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIn
                 >
                     <Typography className={classes.typography}>The content of the Popover.</Typography>
                 </Popover>
-            </div>
+            </div> */}
         </>		
     );
 }

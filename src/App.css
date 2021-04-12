@@ -15,7 +15,7 @@
 
 html, body {
     min-width: 435px;
-    min-height: 1000px;
+
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -28,7 +28,7 @@ div.background {
     position: absolute;
     top: 0px; left: 0px;
     min-width: 435px;
-    min-height: 1000px;
+    min-height: 100vh;
     height: 100%; width: 100%;
     background: #408dce url('https://hoidrop.s3-us-west-2.amazonaws.com/cp_social_app_background.jpg') no-repeat center center; 
     -webkit-background-size: cover;
@@ -49,6 +49,7 @@ div.iphone {
        -moz-background-size: cover;
          -o-background-size: cover;
             background-size: cover;
+           
 }
 
 div.screen {
@@ -62,6 +63,7 @@ div.screen {
 
 .wrapper {
 	height: 523px;
+    background-color: #2b2828;
 }
 
 
@@ -306,7 +308,12 @@ div.screen {
 .bot-menu__wrap {
     position: absolute;
     width: 100%;
-    bottom: 45px;
+    height: 100%;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
     z-index: -1;
     overflow: hidden;
@@ -332,4 +339,22 @@ div.screen {
 
 .bot-menu ul {
     padding: 0;
+}
+
+
+
+
+
+.swipeable-area  {
+    top: calc(50% - 328px)!important;
+    left: calc(50% - 159px)!important;
+    z-index: 1300;
+    inset: 0px;
+    width: 320px;
+    height: 568px;
+    background: #00000070;
+}
+.swipeable-area .MuiBackdrop-root,
+.swipeable-area  .MuiDrawer-paper {
+    position: absolute;
 }

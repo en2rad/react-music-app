@@ -1,49 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import { CardContent, Typography, Card, IconButton } from '@material-ui/core/';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // import FastAverageColor from 'fast-average-color'
+import { Context } from "../context/Context";
 
 import getAverageColor from 'get-average-color'
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Async from 'react-promise'
-
-const bg = 'red'
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: 'red',
-    color: props => props.color,
-  },
-  bg: {
-	  background: bg 
-  }
-});
-
-
-
-
-// const ExampleWithAsync = props => (
-//   <Async promise={prom} then={val => <div>{val}</div>} />
-// )
-
 
 function PlayerInfoMusic({song}) {
-	const classes = useStyles();
-
-	getAverageColor(song.img_src).then(rgb => console.log(`background: rgb(${rgb.r} ${rgb.g} ${rgb.b})`)) 
+	const { stateBottomMenu, setStateBottomMenu, toggleDrawer } = useContext(Context);
 	
-	// useEffect(() => {
-	// 	getAverageColor(song.img_src).then(rgb => bg = (`(${rgb.r} ${rgb.g} ${rgb.b})`)) 
-	// }, []);
-	
-	// const playerinfo = ['c-player-info',];
-    // !page && playerHidden.push('hidden');
 
+	const [colorBg,setColorBg] = useState('rgb(0,0,0)')
+	useEffect(() => {
+		getAverageColor( song.img_src )
+			.then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
+			
+	}, [song]);
+	
     return (	
 		<>
-			<div className={classes.bg}>asd</div>
+			<div style={{background: colorBg}} className={{}}>asd</div>
 			<Card className="c-player-info" >
 				<img className="c-player-info__img" src={song.img_src} title="img"/>	
 				<div className="c-player-info__body">
@@ -55,7 +35,7 @@ function PlayerInfoMusic({song}) {
 							{song.artist}
 						</Typography>
 					</CardContent>
-					<IconButton className="c-player-info__btn btn-more" arial-label="reqind" >
+					<IconButton  onClick={toggleDrawer(true)} className="c-player-info__btn btn-more" arial-label="reqind" >
 						<MoreVertIcon className="c-player-info__icon icon" fontSize="inherit"/>
 					</IconButton>
 				</div>

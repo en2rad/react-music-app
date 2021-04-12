@@ -1,7 +1,9 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef, useContext, useState, useEffect } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux';
 import { Context } from "../context/Context";
+
+import getAverageColor from 'get-average-color'
 
 import { 
     handlePickPlayList, 
@@ -31,7 +33,12 @@ const format = (seconds) => {
 
 
 
+
+
+
+
 function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp, handleSeekChange}) {
+
     const playerRef = useRef(null); 
     const {   
         currentPlayList,
@@ -45,6 +52,15 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
 
     const { page } = useContext(Context)
 
+
+    const [colorBg,setColorBg] = useState('rgb(0,0,0)')
+    // useEffect(() => {
+    //     getAverageColor( currentPlayList[currentSongIndex].img_src )
+    //         .then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
+    //         .catch( setColorBg( 'rgb(0,0,0)'))
+    // }, [  ]);
+
+    console.log(currentPlayList[currentSongIndex])
     const SkipTrackIndex = (forwards) => {
         if (forwards) {
             let temp = currentSongIndex;
