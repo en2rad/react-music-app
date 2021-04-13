@@ -52,13 +52,15 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
 
     const { page } = useContext(Context)
 
+    const urlImg = currentPlayList[currentSongIndex] ? currentPlayList[currentSongIndex].img_src  : null
 
     const [colorBg,setColorBg] = useState('rgb(0,0,0)')
-    // useEffect(() => {
-    //     getAverageColor( currentPlayList[currentSongIndex].img_src )
-    //         .then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
-    //         .catch( setColorBg( 'rgb(0,0,0)'))
-    // }, [  ]);
+    useEffect(() => {
+        getAverageColor( urlImg )
+            .then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
+            .catch( setColorBg( 'rgb(0,0,0)'))
+    }, [urlImg   ]);
+
 
     console.log(currentPlayList[currentSongIndex])
     const SkipTrackIndex = (forwards) => {
@@ -106,7 +108,7 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
   
 
     return (
-        <div className={playerHidden.join(' ')}>
+        <div style={{background: colorBg}} className={playerHidden.join(' ')}>
             {
 				currentPlayList.length ? 
                 <>
@@ -128,10 +130,8 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
                     <PlayerInfoMusic song={currentPlayList[currentSongIndex]}/>
                 
                     <PlayerControls 
-                        currentPlayList={currentPlayList}
-                        currentSongIndex={currentSongIndex}
+                     
                         onSkipTrack={SkipTrack}
-                        playerState={playerState} 
                         onSeek={handleSeekChange}   
                         onSeekMouseUp={onSeekMouseUp}
                         elapsedTime={elapsedTime}

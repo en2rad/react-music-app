@@ -5,27 +5,21 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import FastAverageColor from 'fast-average-color'
 import { Context } from "../context/Context";
 
-import getAverageColor from 'get-average-color'
 
 import { makeStyles } from '@material-ui/core/styles';
+import SwiperImg from './SwiperImg'
 
 
 function PlayerInfoMusic({song}) {
 	const { stateBottomMenu, setStateBottomMenu, toggleDrawer } = useContext(Context);
 	
 
-	const [colorBg,setColorBg] = useState('rgb(0,0,0)')
-	useEffect(() => {
-		getAverageColor( song.img_src )
-			.then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
-			
-	}, [song]);
 	
     return (	
 		<>
-			<div style={{background: colorBg}} className={{}}>asd</div>
 			<Card className="c-player-info" >
-				<img className="c-player-info__img" src={song.img_src} title="img"/>	
+				<SwiperImg src={song.img_src}/>
+				{/* <img className="c-player-info__img" src={song.img_src} title="img"/>	 */}
 				<div className="c-player-info__body">
 					<CardContent className="c-player-info__text">
 						<Typography className="c-player-info__title" component="h7" variant="h7" style={{color: '#fff'}}>

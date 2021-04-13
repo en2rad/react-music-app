@@ -15,8 +15,6 @@ import Player from './components/Player/Player'
 import SwipeableBottomMenu from './components/SwipeableBottomMenu'
 
 
-import SwiperImg from './components/Player/SwiperImg'
-
 
 import { handlePickPlayList } from './redux/action'
 
@@ -39,7 +37,7 @@ function App({playerState, playList, handlePickPlayList}) {
 				<div class="screen">
 					<Router>
 						<div className="wrapper">
-							{/* <SwiperImg/> */}
+					
 							<Player /> 
 							<Switch>
 								<Route exact path="/">

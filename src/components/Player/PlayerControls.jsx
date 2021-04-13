@@ -28,6 +28,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { connect } from 'react-redux';
 import { handleLikeCurrentTrack, handleLikeTrack, handleSeekMouseDown, handlePlayPause, handleVolumeChange, handleMuted, handleLoop } from "../../redux/action";
 
+import TrackSliders from './TrackSliders'
+
 const MySlider = withStyles({
     root: {
       color: '#fff',
@@ -108,8 +110,34 @@ const useStyles = makeStyles({
 
 
 
-function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIndex, onSeek, handleLikeTrack, onSkipTrack, onSeekMouseUp, handleSeekMouseDown, elapsedTime, totalDuration, handlePlayPause, playerState, handleVolumeChange, handleMuted, handleLoop} ) 
+function PlayerControls(
     {
+        handleLikeCurrentTrack, 
+        onSeek, 
+        handleLikeTrack, 
+        onSkipTrack, 
+        onSeekMouseUp, 
+        handleSeekMouseDown, 
+        elapsedTime,
+        totalDuration, 
+        handlePlayPause, 
+        playerState, 
+        handleVolumeChange,
+        handleMuted, 
+        handleLoop
+    }) 
+{
+    
+
+    const {   
+        currentPlayList,
+        currentSongIndex,
+        playing,
+        muted,
+        volume,
+        played,
+        loop,
+    } = playerState;
     
     // const { songs, currentSongIndex } = useContext(Context);
 
@@ -124,44 +152,28 @@ function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIn
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-      };
+    };
     
-      const handleClose = () => {
+    const handleClose = () => {
         setAnchorEl(null);
-      };
+    };
 
-      const open = Boolean(anchorEl);
-      const id = open ? 'simple-popover' : undefined;
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
+    console.log('cheack')
     return (
         <>  
-            <div className={classes.sliderWrap}>
-                <MySlider
-                    min={0}
-                    max={100}
-                    value={playerState.played * 100}    
-                    ValueLabelComponent={(props) => (
-                        <ValueLabelComponent {...props} value={elapsedTime} />
-                    )}
-                    onChange={onSeek}   
-                    onMouseDown={handleSeekMouseDown}
-                    onChangeCommitted={onSeekMouseUp}          
-                />
-                <time className={classes.time}>
-                    <Typography
-                        variant="body1"
-                        style={{ }}
-                    >
-                        {elapsedTime}
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        style={{  }}
-                    >
-                        {totalDuration}
-                    </Typography>
-                </time>
-            </div>   
+            <TrackSliders 
+                playerState={playerState}
+                handleSeekMouseDown={handleSeekMouseDown} 
+                onSeekMouseUp={onSeekMouseUp} 
+                onSeek={onSeek} 
+                elapsedTime={elapsedTime}
+                totalDuration={totalDuration}
+            />
+
+
             <div className={classes.controls}>
                 <IconButton onClick={()=> handleLoop()} className={classes.iconStyle} arial-label="reqind">
                     { 
@@ -246,11 +258,14 @@ function PlayerControls( {handleLikeCurrentTrack, currentPlayList, currentSongIn
 
 
 const mapStateToProps = (store) => {
+    const { playList } = store;
     const { playerState } = store;
     return {
         playerState: playerState,
+        playList: playList,
     };
 };
+
 
 export default connect(
     mapStateToProps,
