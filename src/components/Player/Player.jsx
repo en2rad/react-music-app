@@ -1,7 +1,9 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef, useContext, useState, useEffect } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux';
 import { Context } from "../context/Context";
+
+import getAverageColor from 'get-average-color'
 
 import { 
     handlePickPlayList, 
@@ -31,7 +33,12 @@ const format = (seconds) => {
 
 
 
-function Player({playList, handlePickPlayList, playerState, handleSkipTrack, handleProgress, handleSeekMouseUp, handleSeekChange}) {
+
+
+
+
+function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp, handleSeekChange}) {
+
     const playerRef = useRef(null); 
     const {   
         currentPlayList,
@@ -45,6 +52,17 @@ function Player({playList, handlePickPlayList, playerState, handleSkipTrack, han
 
     const { page } = useContext(Context)
 
+    const urlImg = currentPlayList[currentSongIndex] ? currentPlayList[currentSongIndex].img_src  : null
+
+    const [colorBg,setColorBg] = useState('rgb(43 40 40)')
+    useEffect(() => {
+        getAverageColor( urlImg )
+            .then( rgb => setColorBg(`rgb(${rgb.r} ${rgb.g} ${rgb.b})`) )
+            .catch( setColorBg( 'rgb(43 40 40)'))
+    }, [urlImg   ]);
+
+
+    console.log(currentPlayList[currentSongIndex])
     const SkipTrackIndex = (forwards) => {
         if (forwards) {
             let temp = currentSongIndex;
@@ -90,7 +108,7 @@ function Player({playList, handlePickPlayList, playerState, handleSkipTrack, han
   
 
     return (
-        <div className={playerHidden.join(' ')}>
+        <div style={{background: colorBg}} className={playerHidden.join(' ')}>
             {
 				currentPlayList.length ? 
                 <>
@@ -109,13 +127,11 @@ function Player({playList, handlePickPlayList, playerState, handleSkipTrack, han
                         loop={loop}
                         // onError={() => urlSong = null}
                     />
-                    <PlayerInfoMusic song={currentPlayList[currentSongIndex]}/>
+                    <PlayerInfoMusic onSkipTrack={SkipTrack} song={currentPlayList[currentSongIndex]}/>
                 
                     <PlayerControls 
-                        currentPlayList={currentPlayList}
-                        currentSongIndex={currentSongIndex}
+                     
                         onSkipTrack={SkipTrack}
-                        playerState={playerState} 
                         onSeek={handleSeekChange}   
                         onSeekMouseUp={onSeekMouseUp}
                         elapsedTime={elapsedTime}

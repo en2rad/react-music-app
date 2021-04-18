@@ -1,4 +1,5 @@
 import { 
+    ADD_PLAY_LIST,
     LIKE_TRACK, 
     PICK_PLAYLIST, 
     SKIP_TRACK, 
@@ -9,8 +10,40 @@ import {
     VOLUME_CHANGE_TRACK, 
     MUTED_TRACK, 
     SEEK_CHANGE_TRACK, 
-    SEEK_MOUSE_DOWN_TRACK 
+    SEEK_MOUSE_DOWN_TRACK,
+    LIKE_CURR_TRACK,
+    PREV_TRACK_INDEX,
+    NEXT_TRACK_INDEX,
 } from "./actionTypes"
+
+
+export const handlePrevTrackIndex = ( newValue ) => ({
+    type: PREV_TRACK_INDEX,
+    payload: { 
+        newValue
+    }
+});
+
+export const handleNextTrackIndex = ( newValue ) => ({
+    type: NEXT_TRACK_INDEX,
+    payload: { 
+        newValue
+    }
+});
+
+export const handleAddPlayList = ( newValue ) => ({
+    type: ADD_PLAY_LIST,
+    payload: { 
+        newValue
+    }
+});
+
+export const handleLikeCurrentTrack = ( newValue ) => ({
+    type: LIKE_CURR_TRACK,
+    payload: { 
+        newValue
+    }
+});
 
 export const handleLikeTrack = ( newValue ) => ({
     type: LIKE_TRACK,

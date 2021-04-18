@@ -1,12 +1,25 @@
-import React from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import { CardContent, Typography, Card, IconButton } from '@material-ui/core/';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-function PlayerInfoMusic({song}) {
+// import FastAverageColor from 'fast-average-color'
+import { Context } from "../context/Context";
+
+
+import { makeStyles } from '@material-ui/core/styles';
+import SwiperImg from './SwiperImg'
+
+
+function PlayerInfoMusic({song, onSkipTrack}) {
+	const { stateBottomMenu, setStateBottomMenu, toggleDrawer } = useContext(Context);
+	
+
+	
     return (	
 		<>
-			<Card className="c-player-info">
-				<img className="c-player-info__img" src={song.img_src} title="img"/>	
+			<Card className="c-player-info" >
+				<SwiperImg onSkipTrack={onSkipTrack} src={song.img_src}/>
+				{/* <img className="c-player-info__img" src={song.img_src} title="img"/>	 */}
 				<div className="c-player-info__body">
 					<CardContent className="c-player-info__text">
 						<Typography className="c-player-info__title" component="h7" variant="h7" style={{color: '#fff'}}>
@@ -16,7 +29,7 @@ function PlayerInfoMusic({song}) {
 							{song.artist}
 						</Typography>
 					</CardContent>
-					<IconButton className="c-player-info__btn btn-more" arial-label="reqind" >
+					<IconButton  onClick={toggleDrawer(true)} className="c-player-info__btn btn-more" arial-label="reqind" >
 						<MoreVertIcon className="c-player-info__icon icon" fontSize="inherit"/>
 					</IconButton>
 				</div>

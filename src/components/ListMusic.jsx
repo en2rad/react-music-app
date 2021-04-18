@@ -1,14 +1,16 @@
 import React from 'react'
-import { ListItemText, ListItem, makeStyles, IconButton, Avatar } from '@material-ui/core/';
+import { ListItemText, ListItem, IconButton, Avatar } from '@material-ui/core/';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux'
 import { handleSkipTrack, handlePlayPause } from '../redux/action'
 
 
-function ListMusic({playList, handleSkipTrack, playerState, handlePlayPause}) {
+function ListMusic({ handleSkipTrack, playerState, handlePlayPause}) {
 	const {   
         currentSongIndex,
+		currentPlayList,
+		infoPlayList,
     } = playerState;
 
 	const PickSong = (index) => {
@@ -20,24 +22,34 @@ function ListMusic({playList, handleSkipTrack, playerState, handlePlayPause}) {
         }
     } 
 
+	const menuMore = (ev) => {
+		ev.stopPropagation();
+		console.log("kek")
+	}
+
+
+
+
     return (
 		<div className="c-list-music">
 			<div className="c-list-music__header">
 				<span className="c-list-music__disc">
 					Cейчас играет
 				</span>
-				<p className="c-list-music__title">Плейлист "Мне нравится"</p>
+				<p className="c-list-music__title">Плейлист "{infoPlayList.title}"</p>
 			</div>
 
 			{ 
-				playList.map((item, index) => {
+				currentPlayList.map((item, index) => {
 					return (
-						<ListItem onClick={()=> PickSong(index)} className="c-list-music__item"  button key={index}>
+						<ListItem 
+							className={item === currentPlayList[currentSongIndex] ? 'c-list-music__item active' : 'c-list-music__item ' }
+							onClick={()=> PickSong(index)}  button key={index}>
 							<Avatar className="c-list-music__img" variant="square" src={item.img_src} alt="img"/>
 							
 							<ListItemText className="c-list-music__text" primary={item.title} secondary={item.artist} />
 				
-							<IconButton className="c-list-music__btn btn-more" arial-label="reqind">
+							<IconButton onClick={(ev) => menuMore(ev)} className="c-list-music__btn btn-more" arial-label="reqind">
 								<MoreVertIcon className="c-list-music__icon icon" fontSize="inherit"/>
 							</IconButton>
 						</ListItem>
@@ -48,6 +60,18 @@ function ListMusic({playList, handleSkipTrack, playerState, handlePlayPause}) {
     );
 }
 
+const mapStateToProps = (store) => {
+    const { playList } = store;
+    const { playerState } = store;
+    return {
+        playerState: playerState,
+    };
+};
+
 export default connect(
-	null, { handleSkipTrack, handlePlayPause }
+	mapStateToProps, { 
+		handleSkipTrack, 
+		handlePlayPause 
+	}
 )(ListMusic);
+

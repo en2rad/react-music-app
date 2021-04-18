@@ -7,7 +7,7 @@
 :root {
     --primary-color: #fff;
     --secondry-color: #ffffffad;
-
+    --yellow-color: #ffdb4d;
     --primary-bg: #3a3a3a;
     --secondry-bg: #2b2828;
 }
@@ -15,7 +15,7 @@
 
 html, body {
     min-width: 435px;
-    min-height: 1000px;
+
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -25,10 +25,10 @@ html, body {
 }
 
 div.background {
-    position: absolute;
-    top: 0px; left: 0px;
-    min-width: 435px;
-    min-height: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     height: 100%; width: 100%;
     background: #408dce url('https://hoidrop.s3-us-west-2.amazonaws.com/cp_social_app_background.jpg') no-repeat center center; 
     -webkit-background-size: cover;
@@ -40,28 +40,35 @@ div.background {
 /*	The Device */
 
 div.iphone {
-    height: 810px; width: 435px; 
-    position: absolute;
+    /* height: 810px; width: 435px;  */
+    /* position: absolute;
     margin: auto;
-    top: 0px; bottom: 80px; left: 0px; right: 0px;
-    background: url('https://hoidrop.s3-us-west-2.amazonaws.com/cp_social_app_iphone.png') no-repeat center center; 
+    top: 0px; bottom: 80px; left: 0px; right: 0px; */
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/frameIphone.png")   no-repeat center center; 
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
             background-size: cover;
+
+
+            border: 1px solid #000;
+    border-width: 30px 10px 30px 10px;
+    border-radius: 10px;
+           
 }
 
 div.screen {
     height: 568px; 
     width: 320px;
-    position: absolute;
-    top: 119px; left: 59px;
+    /* position: absolute;
+    top: 119px; left: 59px; */
     overflow: hidden;
     position: relative;
 }
 
 .wrapper {
 	height: 523px;
+    background-color: #2b2828;
 }
 
 
@@ -87,9 +94,9 @@ div.screen {
 }
 
 .c-player-info .c-player-info__img {
-    width: 100%;
+    max-width: 260px;
     height: auto;   
-}
+}   
 
 .c-player-info .c-player-info__body {
     display: flex;
@@ -117,8 +124,57 @@ div.screen {
 .c-player-info .c-player-info__icon {
 
 }
+
+.c-player-slider {
+    background: red;
+}
+
+.c-player-slider__slide {
+    background: blue;
+    margin: 0 auto;
+}
+
+.c-player-info  .swiper-wrapper {
+    z-index: 9999;
+}
+
+.c-player-info .swiper-slide {
+    /* width: 200px!important; */
+}
 /* ENDS ENDS = PLAYER INFO = ENDS ENDS ENDS ENDS ENDS */
 
+.swiper-wrapper {
+    width: 300px!important;
+    margin: 0 -20px!important;
+}
+
+.swiper-slide img {
+    width: 200px;
+    height: 200px;
+}
+
+.swiper-slide {
+    /* margin: 0 -20px; */
+}
+
+.asd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.lel {
+   width: 300px;
+   margin: 0 auto;
+   padding: 0 25px;
+   margin: 0 15px;
+   background: #f1f1f1;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+}
 
 /* START START = LISTMUSIC = START START START START START */
 
@@ -178,6 +234,10 @@ div.screen {
     font-size: inherit;
 }
 
+.c-list-music .c-list-music__item.active {
+    background: rgb(253 248 248 / 15%)
+}
+
 /* END END END END END = LISTMUSIC =  END END END END END */
 
 
@@ -192,6 +252,10 @@ div.screen {
 }
 
 .c-play-list .c-play-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     padding: 10px 13px;
     background: var(--secondry-bg);
 }
@@ -228,6 +292,48 @@ div.screen {
 .c-play-list .c-play-list__icon {
 
 }
+
+.c-play-list__modal {
+    display: flex;
+    align-items: center;
+	justify-content: center;
+}
+
+.c-play-list__modal-body {
+    max-width: 300px;
+    background: var(--secondry-bg);
+    padding: 10px;
+    color: var(--primary-color);
+}
+
+.c-play-list__modal .c-play-list__modal-title {
+    color: var(--primary-color);
+}
+
+.c-play-list__modal .c-play-list__modal-input div{
+    color: var(--primary-color);
+}
+
+.c-play-list__modal .c-play-list__modal-input div::before {
+    border-color: var(--yellow-color)!important;
+}
+
+.c-play-list__modal .c-play-list__modal-input div::after {
+    border-color: var(--yellow-color)!important;
+}
+
+
+.c-play-list__modal .c-play-list__modal-input input {
+    color: inherit;
+}
+
+.c-play-list__modal .c-play-list__modal-btn {
+    color: var(--yellow-color);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
 /* END END END END END = LISTMUSIC =  END END END END END */          
 
 
@@ -235,7 +341,7 @@ div.screen {
 
 /* START START = BOTTOM NAV = START START START START START */     
 .screen .с-bottom-nav {
-    height: 38px;
+    height: 45px;
     background: #3a3a3a;
     border-top: 1px solid;
     border-color: var(--secondry-color);
@@ -286,4 +392,73 @@ div.screen {
 	visibility: hidden;
 	opacity: 0;
 	position: absolute;
+}
+
+
+
+
+
+
+
+
+
+.bot-menu__wrap.open {
+    z-index: 1;
+    overflow: visible;
+    opacity: 1;
+}
+
+
+.bot-menu__wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.bot-menu {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    max-height: 100%;
+    padding: 0!important;
+
+    color: rgba(0, 0, 0, 0.87);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #fff;
+
+    transform: none;
+    transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.bot-menu ul {
+    padding: 0;
+}
+
+
+
+
+
+.swipeable-area  {
+    top: calc(50% - 328px)!important;
+    left: calc(50% - 159px)!important;
+    z-index: 1300;
+    inset: 0px;
+    width: 320px;
+    height: 568px;
+    background: #00000070;
+}
+.swipeable-area .MuiBackdrop-root,
+.swipeable-area  .MuiDrawer-paper {
+    position: absolute;
 }

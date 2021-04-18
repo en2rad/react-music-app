@@ -1,15 +1,34 @@
-import { PICK_PLAYLIST, SKIP_TRACK, SEEK_MOUSE_UP_TRACK, PROGRESS_TRACK, PLAY_PAUSE_TRACK, MUTED_TRACK, VOLUME_CHANGE_TRACK, LOOP_TRACK, SEEK_CHANGE_TRACK, SEEK_MOUSE_DOWN_TRACK, } from '../actionTypes'
-// import playerRef from '../../components/Player/Player'
+import { 
+    LIKE_CURR_TRACK,
+    PICK_PLAYLIST, 
+    SKIP_TRACK, 
+    SEEK_MOUSE_UP_TRACK, 
+    PROGRESS_TRACK, 
+    PLAY_PAUSE_TRACK, 
+    MUTED_TRACK, 
+    VOLUME_CHANGE_TRACK, 
+    LOOP_TRACK, 
+    SEEK_CHANGE_TRACK, 
+    SEEK_MOUSE_DOWN_TRACK, 
+    PREV_TRACK_INDEX,
+    NEXT_TRACK_INDEX,
+} from '../actionTypes'
+
 
 const initState  = {
     currentPlayList: [],
     currentSongIndex: 0,
+    prevSongIndex: null,
+    nextSongIndex: null,
+
     playing: false,
     muted: false,
     volume: 1,
     played: 0,
     seeking: false,
     loop: false,
+
+    infoPlayList: {},
     fovarite: false,
 }
 
@@ -17,14 +36,51 @@ const playerState = (state = initState, action) => {
     const { type, payload } = action;
 
     switch(type) {
+        case LIKE_CURR_TRACK: {
+            const { newValue } = payload;
+            return {
+                ...state,
+                currentPlayList: [ 
+                    ...state.currentPlayList.map(item => {
+                        if(item === newValue) {
+                            return {
+                                ...item,
+                                favorite: !item.favorite,
+                            }
+                        }
+                        return item;
+                    })
+                ]
+                
+            }
+        }
+
         case PICK_PLAYLIST: {
             const { newValue } = payload;
             return {
                 ...state,
-                currentPlayList: [...newValue],
-                playing: false,
+                currentPlayList: newValue.tracks,
+                infoPlayList: newValue,
+                currentSongIndex: 0,
             }
         }
+        
+        case NEXT_TRACK_INDEX: {
+            const { newValue } = payload;
+            return {
+                ...state,
+                nextSongIndex: newValue
+            }
+        }
+    
+        case PREV_TRACK_INDEX: {
+            const { newValue } = payload;
+            return {
+                ...state,
+                prevSongIndex: newValue
+            }
+        }
+
         case SKIP_TRACK: {
             const { newValue } = payload;
             return {

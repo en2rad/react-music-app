@@ -1,7 +1,17 @@
 import React from 'react'
 
 // material ui
-import { IconButton, makeStyles, Slider, withStyles, Tooltip, Typography } from '@material-ui/core';
+import {
+    IconButton, 
+    makeStyles, 
+    Slider, 
+    withStyles, 
+    Tooltip, 
+    Typography, 
+
+    Button,
+    Popover,
+} from '@material-ui/core';
 
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
@@ -16,7 +26,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 
 import { connect } from 'react-redux';
-import { handleLikeTrack, handleSeekMouseDown, handlePlayPause, handleVolumeChange, handleMuted, handleLoop } from "../../redux/action";
+import { handleLikeCurrentTrack, handleLikeTrack, handleSeekMouseDown, handlePlayPause, handleVolumeChange, handleMuted, handleLoop } from "../../redux/action";
+
+import TrackSliders from './TrackSliders'
 
 const MySlider = withStyles({
     root: {
@@ -31,32 +43,31 @@ const MySlider = withStyles({
     },
     active: {},
     valueLabel: {
-      left: 'calc(-50% + 12px)',
-      top: -22,
-      '& *': {
-        background: 'transparent',
-        color: '#000',
-      },
+        left: 'calc(-50% + 12px)',
+        top: -22,
+        '& *': {
+            background: 'transparent',
+            color: '#000',
+        },
     },
     track: {
-      height: 2,
+        height: 2,
     },
     rail: {
-      height: 2,
-      opacity: 0.3,
-     
+        height: 2,
+        opacity: 0.3,
     },
     mark: {
-      backgroundColor: 'red',
-      height: 8,
-      width: 1,
-      marginTop: -3,
+        backgroundColor: 'red',
+        height: 8,
+        width: 1,
+        marginTop: -3,
     },
     markActive: {
-      opacity: 1,
-      backgroundColor: 'currentColor',
+        opacity: 1,
+        backgroundColor: 'currentColor',
     },
-  })(Slider);
+})(Slider);
 
 function ValueLabelComponent(props) {
   const { children, open, value } = props;
@@ -99,44 +110,70 @@ const useStyles = makeStyles({
 
 
 
-function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeTrack, onSkipTrack, onSeekMouseUp, handleSeekMouseDown, elapsedTime, totalDuration, handlePlayPause, playerState, handleVolumeChange, handleMuted, handleLoop} ) 
+function PlayerControls(
     {
+        handleLikeCurrentTrack, 
+        onSeek, 
+        handleLikeTrack, 
+        onSkipTrack, 
+        onSeekMouseUp, 
+        handleSeekMouseDown, 
+        elapsedTime,
+        totalDuration, 
+        handlePlayPause, 
+        playerState, 
+        handleVolumeChange,
+        handleMuted, 
+        handleLoop
+    }) 
+{
+    
+
+    const {   
+        currentPlayList,
+        currentSongIndex,
+        playing,
+        muted,
+        volume,
+        played,
+        loop,
+    } = playerState;
     
     // const { songs, currentSongIndex } = useContext(Context);
 
-    
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const classes = useStyles();
 
+    function Like(newValue) {
+        handleLikeTrack(newValue)
+        handleLikeCurrentTrack(newValue)
+        
+    }
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    console.log('cheack')
     return (
         <>  
-            <div className={classes.sliderWrap}>
-                <MySlider
-                    min={0}
-                    max={100}
-                    value={playerState.played * 100}    
-                    ValueLabelComponent={(props) => (
-                        <ValueLabelComponent {...props} value={elapsedTime} />
-                    )}
-                    onChange={onSeek}   
-                    onMouseDown={handleSeekMouseDown}
-                    onChangeCommitted={onSeekMouseUp}          
-                />
-                <time className={classes.time}>
-                    <Typography
-                        variant="body1"
-                        style={{ }}
-                    >
-                        {elapsedTime}
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        style={{  }}
-                    >
-                        {totalDuration}
-                    </Typography>
-                </time>
-            </div>   
+            <TrackSliders 
+                playerState={playerState}
+                handleSeekMouseDown={handleSeekMouseDown} 
+                onSeekMouseUp={onSeekMouseUp} 
+                onSeek={onSeek} 
+                elapsedTime={elapsedTime}
+                totalDuration={totalDuration}
+            />
+
+
             <div className={classes.controls}>
                 <IconButton onClick={()=> handleLoop()} className={classes.iconStyle} arial-label="reqind">
                     { 
@@ -165,7 +202,9 @@ function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeT
                 <IconButton onClick={() => onSkipTrack()}  className={classes.iconStyle, classes.iconStyleBig} arial-label="reqind">
                     <SkipNextIcon fontSize="inherit"/>
                 </IconButton>
-                <IconButton onClick={() => handleLikeTrack(currentPlayList[currentSongIndex])} className={classes.iconStyle} arial-label="reqind">
+
+                {/* onClick={() => handleLikeTrack(currentPlayList[currentSongIndex], currentSongIndex)} */}
+                <IconButton onClick={() => Like(currentPlayList[currentSongIndex])} className={classes.iconStyle} arial-label="reqind">
                     { 
                         currentPlayList[currentSongIndex].favorite ?   
                             <FavoriteIcon fontSize="inherit"/>:
@@ -191,6 +230,27 @@ function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeT
                     defaultValue={100}
                     onChange={handleVolumeChange}
                 />
+
+                {/* <Button aria-describedby={id} variant="contained" color="primary" onClick={handleClick}>
+                    Open Popover
+                </Button> */}
+                
+                {/* <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                    }}
+                >
+                    <Typography className={classes.typography}>The content of the Popover.</Typography>
+                </Popover> */}
             </div>
         </>		
     );
@@ -198,11 +258,14 @@ function PlayerControls( {currentPlayList, currentSongIndex, onSeek, handleLikeT
 
 
 const mapStateToProps = (store) => {
+    const { playList } = store;
     const { playerState } = store;
     return {
         playerState: playerState,
+        playList: playList,
     };
 };
+
 
 export default connect(
     mapStateToProps,
@@ -213,6 +276,8 @@ export default connect(
         handleLoop,
         handleSeekMouseDown,
         handleLikeTrack,
+
+        handleLikeCurrentTrack,
     }
 )(PlayerControls);
 
