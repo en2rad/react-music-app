@@ -72,7 +72,7 @@ function App({playerState, playList, handlePickPlayList, handlePrevTrackIndex, h
 			</div>
 		</div>
 		<div className="asd">
-			asd
+		
 			
 			<SwiperNew/>
 		</div>
