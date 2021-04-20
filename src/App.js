@@ -13,7 +13,7 @@ import ListMusic from './components/ListMusic'
 import BottomNav from './components/BottomNav'
 import Player from './components/Player/Player'
 import SwipeableBottomMenu from './components/SwipeableBottomMenu'
-import SwiperNew from './components/Player/SwiperNew'
+import MiniPlayer from './components/Player/MiniPlayer'
 
 
 import { 
@@ -72,9 +72,9 @@ function App({playerState, playList, handlePickPlayList, handlePrevTrackIndex, h
 			</div>
 		</div>
 		<div className="asd">
-			asd
+		
 			
-			<SwiperNew/>
+			<MiniPlayer/>
 		</div>
 		</>
   	);

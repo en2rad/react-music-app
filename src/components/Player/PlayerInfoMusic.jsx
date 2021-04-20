@@ -8,7 +8,7 @@ import { Context } from "../context/Context";
 
 import { makeStyles } from '@material-ui/core/styles';
 import SwiperImg from './SwiperImg'
-
+import SwiperNew from './SwiperNew'
 
 function PlayerInfoMusic({song, onSkipTrack}) {
 	const { stateBottomMenu, setStateBottomMenu, toggleDrawer } = useContext(Context);
@@ -18,7 +18,10 @@ function PlayerInfoMusic({song, onSkipTrack}) {
     return (	
 		<>
 			<Card className="c-player-info" >
-				<SwiperImg onSkipTrack={onSkipTrack} src={song.img_src}/>
+				<div className="neww">
+				<SwiperNew onSkipTrack={onSkipTrack} src={song.img_src}/>
+				</div>
+			
 				{/* <img className="c-player-info__img" src={song.img_src} title="img"/>	 */}
 				<div className="c-player-info__body">
 					<CardContent className="c-player-info__text">

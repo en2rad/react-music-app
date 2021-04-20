@@ -163,7 +163,8 @@ function PlayerControls(
 
     console.log('cheack')
     return (
-        <>  
+        <div className="c-player-controls">  
+
             <TrackSliders 
                 playerState={playerState}
                 handleSeekMouseDown={handleSeekMouseDown} 
@@ -252,7 +253,7 @@ function PlayerControls(
                     <Typography className={classes.typography}>The content of the Popover.</Typography>
                 </Popover> */}
             </div>
-        </>		
+        </div>		
     );
 }
 

@@ -103,6 +103,7 @@ div.screen {
     justify-content: space-between;
 
     margin: 10px 0;
+    padding: 0 13px;
 }
 
 .c-player-info .c-player-info__text {
@@ -142,6 +143,18 @@ div.screen {
     /* width: 200px!important; */
 }
 /* ENDS ENDS = PLAYER INFO = ENDS ENDS ENDS ENDS ENDS */
+
+
+
+
+
+/* START START = PLAYER CONTROLS = START START START START START */
+
+.c-player-controls {
+    padding: 0 13px;
+}
+/* ENDS ENDS = PLAYER CONTROLS = ENDS ENDS ENDS ENDS ENDS */
+
 
 
 
@@ -420,9 +433,8 @@ div.screen {
 
 
 .swipeable-area  {
-    top: calc(50% - 328px)!important;
-    left: calc(50% - 159px)!important;
-    z-index: 1300;
+    top: calc(50% - 284px)!important;
+    left: calc(50% - 160px)!important;
     inset: 0px;
     width: 320px;
     height: 568px;
@@ -433,22 +445,32 @@ div.screen {
     position: absolute;
 }
 
-div.background {
+/* div.background {
     display: none!important;
-}
+} */
 
-.asd {
+ .asd {
     display: flex;
     justify-content: center;
 }
 
-.wraps {
+
+/* .c-player-info{
+    position: relative;
+    margin: 0 -13px;
+} */
+
+.c-player {
+    padding: 0;
+
+} 
+.wraps {    
     width: 320px;
+
 }
 .wraps .swiper-container {
     width: 100%;
-    padding-top: 50px;
-    padding-bottom: 50px;
+
 }
 
 .wraps .swiper-wrapper {
@@ -466,10 +488,31 @@ div.background {
 .wraps .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 300px!important;
-    height: 300px;
+    width: 250px;
+    height: 250px;
 }
 
+.wraps .swiper-slide img {
+    width: 250px;
+    height: 250px;
+}
 .wraps .swiper-slide {
     background: #000;
 }
+
+.asd {
+    background-color: #2b2828;
+}
+
+
+
+
+
+/* c-mini-player
+c-mini-player__slider
+c-mini-player__bodyc-mini-player__btn
+c-mini-player__icon
+c-mini-player__text
+c-mini-player__title
+c-mini-player__artist
+c-mini-player__btn  */

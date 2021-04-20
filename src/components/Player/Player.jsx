@@ -48,6 +48,7 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
         volume,
         played,
         loop,
+        infoPlayList,
     } = playerState;
 
     const { page } = useContext(Context)
@@ -112,6 +113,7 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
             {
 				currentPlayList.length ? 
                 <>
+          
                     <ReactPlayer
                         width="0"
                         height="0"  
