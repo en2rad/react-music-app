@@ -508,11 +508,37 @@ div.screen {
 
 
 
-/* c-mini-player
-c-mini-player__slider
-c-mini-player__bodyc-mini-player__btn
-c-mini-player__icon
-c-mini-player__text
-c-mini-player__title
-c-mini-player__artist
-c-mini-player__btn  */
+.c-mini-player {
+    width: 100%;
+    max-width: 320px ;
+}
+
+.c-mini-player__slider {
+    position: relative;
+}
+
+.c-mini-player__body {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 13px;
+}
+
+.c-mini-player__icon {
+    position: relative;
+}
+
+.c-mini-player__text {
+    position: relative;
+}
+
+.c-mini-player__title {
+    position: relative;
+}
+
+.c-mini-player__artist {
+    position: relative;
+}
+
+.c-mini-player__btn {
+    position: relative;
+}

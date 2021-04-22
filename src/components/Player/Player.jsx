@@ -64,25 +64,68 @@ function Player({playerState, handleSkipTrack, handleProgress, handleSeekMouseUp
 
 
     console.log(currentPlayList[currentSongIndex])
+    // const SkipTrackIndex = (forwards) => {
+    //     if (forwards) {
+    //         let temp = currentSongIndex;
+    //         temp++;
+
+    //         if (temp > currentPlayList.length - 1) {
+    //             temp = 0;
+    //         }
+
+    //         return temp;      
+    //     } else {
+    //         let temp = currentSongIndex;
+    //         temp--;
+
+    //         if (temp < 0) {
+    //             temp = currentPlayList.length - 1;
+    //         }
+
+    //         return temp;  
+    //     }
+    // }
+
     const SkipTrackIndex = (forwards) => {
         if (forwards) {
-            let temp = currentSongIndex;
-            temp++;
-
+            let temp = currentSongIndex + 1;
+           
+            let next = temp + 1;
+            let prev = temp - 1;
+    
+            if (next > currentPlayList.length - 1) {
+                next = 0;
+            }
+    
+            if (prev < 0) {
+                prev = currentPlayList.length - 1;
+            }
+    
             if (temp > currentPlayList.length - 1) {
                 temp = 0;
             }
-
-            return temp;      
+    
+            return { temp, next, prev };      
         } else {
             let temp = currentSongIndex;
+            let next = temp + 1;
+            let prev = temp - 1;
+            
             temp--;
-
+    
             if (temp < 0) {
                 temp = currentPlayList.length - 1;
             }
-
-            return temp;  
+    
+            if (prev < 0) {
+                prev = currentPlayList.length - 1;
+            }
+    
+            if (temp > currentPlayList.length - 1) {
+                temp = 0;
+            }
+    
+            return { temp, next, prev };       
         }
     }
 

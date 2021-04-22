@@ -20,12 +20,13 @@ import {
 	handlePickPlayList,
 	handlePrevTrackIndex,
 	handleNextTrackIndex,
+	handleSkipTrack,
 } from './redux/action'
 
 import { connect } from 'react-redux';
 
 
-function App({playerState, playList, handlePickPlayList, handlePrevTrackIndex, handleNextTrackIndex,}) {
+function App({playerState, playList, handlePickPlayList,  handleSkipTrack, handlePrevTrackIndex, handleNextTrackIndex,}) {
 	useEffect(() => {
         handlePickPlayList(playList.allSongs)
     },[])
@@ -37,12 +38,37 @@ function App({playerState, playList, handlePickPlayList, handlePrevTrackIndex, h
 		nextSongIndex,
     } = playerState;
 
+	// useEffect(() => {
+	// 	currentSongIndex + 1 > currentPlayList.length - 1 && handleNextTrackIndex(currentSongIndex + 1);
+	// 	currentSongIndex - 1 > 0 && handlePrevTrackIndex(currentSongIndex - 1);
+	// }, [currentSongIndex]);
+
 	useEffect(() => {
-		currentSongIndex + 1 > currentPlayList.length - 1 && handleNextTrackIndex(currentSongIndex + 1);
-		currentSongIndex - 1 > 0 && handlePrevTrackIndex(currentSongIndex - 1);
-	}, [currentSongIndex]);
+		
+		let temp = currentSongIndex;  
+		let next = temp + 1;
+		let prev = temp - 1;
 
+		// console.log(currentPlayList)
+		// console.log(prev)
+		// console.log(temp)
+		// console.log(next)
+		
+		if (next > currentPlayList.length - 1) {
+			next = 0;
+		}
 
+		if (prev < 0) {
+			prev = currentPlayList.length - 1;
+		}
+
+		if (temp > currentPlayList.length - 1) {
+			temp = 0;
+		}
+
+		handleSkipTrack({ temp, next, prev });  
+
+	},[])
 
 	return (
 		<>
@@ -92,6 +118,8 @@ const mapStateToProps = (store) => {
 export default connect(
     mapStateToProps,
     { 
+		handleSkipTrack,
+
 		handlePickPlayList,
 		handlePrevTrackIndex,
 		handleNextTrackIndex,

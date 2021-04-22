@@ -14,9 +14,10 @@ import {
     NEXT_TRACK_INDEX,
 } from '../actionTypes'
 
+import allSongs from '../../components/songs'
 
 const initState  = {
-    currentPlayList: [],
+    currentPlayList: [...allSongs],
     currentSongIndex: 0,
     prevSongIndex: null,
     nextSongIndex: null,
@@ -83,9 +84,12 @@ const playerState = (state = initState, action) => {
 
         case SKIP_TRACK: {
             const { newValue } = payload;
+            const {temp, next, prev} = newValue 
             return {
                 ...state,
-                currentSongIndex: newValue
+                currentSongIndex: temp,
+                prevSongIndex: prev,
+                nextSongIndex: next,
             }
         }
         case SEEK_CHANGE_TRACK:  {
