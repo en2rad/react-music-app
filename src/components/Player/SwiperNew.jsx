@@ -1,4 +1,5 @@
 // import Swiper core and required modules
+import React, { useEffect, useState } from 'react'
 import SwiperCore, { Navigation, Pagination, Scrollbar, EffectCoverflow} from 'swiper';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -38,22 +39,34 @@ function SwiperNew({playerState,  onSkipTrack}) {
 	// const src = currentPlayList[currentSongIndex].img_src
 	// const prevSrc = currentPlayList[prevSongIndex].img_src
 	// const nextSrc = currentPlayList[nextSongIndex].img_src
+
+	// next
+	// prev
+	const [state,setState] = useState({
+		cuRsrc: null,
+		prevSrc: null,
+		nextSrc: null,
+	})
+
+	useEffect(() => {
+		setState({
+			cuRsrc: currentPlayList[currentSongIndex]?.img_src, 
+			prevSrc: currentPlayList[prevSongIndex]?.img_src,
+			nextSrc: currentPlayList[nextSongIndex]?.img_src,
+		})
+	},[playerState])
+
+	function onChange(val) {
+		const a = val === 'next' ? true : false
+		onSkipTrack(a)
+	}
+
 	return (
 		<div className="wraps">
 			<Swiper
 				initialSlide={1}
 				stretch={1}
-			
-				onSwiper={(swiper) => console.log(swiper)}
-
-				// beforeSlideChangeStart={() => console.log('<=')}
-				// slideChangeTransitionEnd={() => handleSkipTrack()}
-				// reachEnd={() => console.log('=>s')}
-
-				onSlideChange={() => onSkipTrack()}
-				// beforeSlideChangeStart={() => console.log('slide change')}
-				// reachEnd={console.log('slide =>')}
-
+				onSlideChange={(swiper) => onChange(swiper.swipeDirection)}
 				
 				effect="coverflow"
 				grabCursor={true}
@@ -92,7 +105,7 @@ function SwiperNew({playerState,  onSkipTrack}) {
 				
 					<SwiperSlide >	
 						<img
-							src={currentPlayList[prevSongIndex]?.img_src}
+							src={state.prevSrc}
 							alt={`Thumbnail ${1}`}
 						>
 						</img>
@@ -100,7 +113,7 @@ function SwiperNew({playerState,  onSkipTrack}) {
 			
 						<SwiperSlide>	
 							<img
-								src={currentPlayList[currentSongIndex]?.img_src}
+								src={state.cuRsrc}
 								alt={`Thumbnail ${2}`}
 							>
 							</img>
@@ -108,7 +121,7 @@ function SwiperNew({playerState,  onSkipTrack}) {
 			
 						<SwiperSlide>	
 							<img
-								src={currentPlayList[nextSongIndex]?.img_src}
+								src={state.nextSrc}
 								alt={`Thumbnail ${3}`}
 							>
 							</img>
